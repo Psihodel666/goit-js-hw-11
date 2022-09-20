@@ -17,8 +17,8 @@ refs.inputEl.addEventListener('input', debounce(onCountryInput, DEBOUNCE_DELAY))
 function onCountryInput() {
     const name = refs.inputEl.value.trim();
     if (name === "") {
-        return (refs.countryList.innerHTML = ""), (refs.countryInfo.innerHTML = "")
-    };
+        return refs.countryList.innerHTML = ""}
+
 
 
     fetchCountries(name)
@@ -30,11 +30,12 @@ function onCountryInput() {
                 refs.countryInfo.insertAdjacentHTML('beforeend', renderCountryInfo(countries))
             } else if (countries.length >= 10) {
                 alertTooManyMatches()
+                
             } else {
                 refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
             }
         })
-        .catch(alertWrongName)
+        .catch(alertWrongName, (refs.countryList.innerHTML = ''),(refs.countryInfo.innerHTML = ''))
 };  
 
 
