@@ -49,9 +49,13 @@ body {
     height: 50x;
   } */
 
-
+.conteiner-btn__page{
+  display: flex;
+  justify-content: center;
+}
 
   .button12 {
+    
     border: none;
     margin: 22px 0 0 85px;
     cursor: pointer;
@@ -129,6 +133,19 @@ body {
     transform: scaleX(.51);
     transform: scaleX(.51);
   }
+  .visually-hidden {
+    width: 1px;
+    height: 1px;
+    white-space: nowrap;
+    -webkit-clip-path: inset(100%);
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    border: 0;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden;
+}
 .gallery{
   display: flex;
   width: 100%;
