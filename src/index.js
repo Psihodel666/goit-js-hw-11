@@ -29,6 +29,7 @@ refs.buttonPage.addEventListener('click', onButtonClick)
 async function searchImg(e){
     e.preventDefault()
     const query = e.target.elements.searchQuery.value.trim();
+
     const response = await searchQuery.searchPictures(query);
     
     const imgArr = response.hits;
@@ -51,8 +52,6 @@ async function searchImg(e){
             let lightbox = new SimpleLightbox('.img-conteiner a',{
               captions:true,
               captionDelay:250,});
-            
-            
         }
         
         
