@@ -27,9 +27,12 @@ async function searchImg(e){
     try {
       refs.conteinerImg.innerHTML = '';
         if(imgArr.length === 0){
-            return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
+             Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
+            refs.buttonPage.classList.add('visually-hidden')
+            return
         }else if(!query){
           Notiflix.Notify.info('Please, enter key word for search!');
+          refs.buttonPage.classList.add('visually-hidden')
           return
         }
         else{
