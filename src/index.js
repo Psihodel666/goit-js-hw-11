@@ -18,7 +18,7 @@ const refs = {
 
 
 refs.form.addEventListener('submit', searchImg)
-refs.buttonPage.addEventListener('click',addPage)
+
 
 
 
@@ -28,12 +28,11 @@ refs.buttonPage.addEventListener('click',addPage)
 
 function searchImg(e){
     e.preventDefault()
-    
-
-    
     const inputValue = refs.input.value.trim();
     refs.conteinerImg.innerHTML = '';
+    
     fetchImg(inputValue)
+
     .then((resp) => {
         
         const imgArr = resp.data.hits
@@ -47,6 +46,7 @@ function searchImg(e){
         
         
     })
+   
     .catch((error)=>{
         Notiflix.Notify.failure('error')
     })
@@ -102,10 +102,3 @@ function markup(arrImg){
 //           </button>
 //           `
 // }
-
-function addPage(e){
-    fetchImg(e)
-    .then((resp) =>{
-        console.log(resp)
-    })
-}
