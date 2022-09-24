@@ -48,7 +48,15 @@ async function searchImg(e){
             refs.conteinerImg.insertAdjacentHTML('beforeend', markup(imgArr))
             refs.buttonPage.classList.remove('visually-hidden')
             Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
-            return lightbox;
+            const { height: cardHeight } = document
+            .querySelector(".gallery")
+            .firstElementChild.getBoundingClientRect();
+
+          window.scrollBy({
+            top: cardHeight * 2,
+            behavior: "smooth",
+          });
+                      return lightbox;
             
             
         }
