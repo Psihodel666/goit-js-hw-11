@@ -24,7 +24,7 @@ const refs = {
 
 
 refs.form.addEventListener('submit', searchImg)
-refs.buttonPage.addEventListener('click', onButtonClick)
+// refs.buttonPage.addEventListener('click', onButtonClick)
 
 async function searchImg(e){
     e.preventDefault()
@@ -52,6 +52,7 @@ async function searchImg(e){
             let lightbox = new SimpleLightbox('.img-conteiner a',{
               captions:true,
               captionDelay:250,});
+              refs.buttonPage.addEventListener('click', onButtonClick)
         }
         
         
@@ -77,7 +78,7 @@ function markup(arrImg){
           </div>
         </div>
         <div class="content-holder">
-          <p class="category">Lifestyle</p>
+          <p class="category">Info</p>
           <div class="separator">
             <span class="separator-sub"></span>
           </div>
@@ -112,9 +113,10 @@ function markup(arrImg){
 
 
 async function onButtonClick() {
-  searchQuery.page += 1;
-
+  
+  lightbox.destroy();
   const response = await searchQuery.searchPictures();
+  searchQuery.page += 1;
   if (searchQuery.page > response.totalHits / searchQuery.per_page) {
       refs.buttonPage.classList.add('visually-hidden');
       Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
