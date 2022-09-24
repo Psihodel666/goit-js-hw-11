@@ -3,6 +3,15 @@ import Notiflix from 'notiflix';
 import axios from "axios";
 import { searchQuery} from './fetchImg';
 var debounce = require('debounce');
+// Описан в документации
+import SimpleLightbox from "simplelightbox";
+// Дополнительный импорт стилей
+import "simplelightbox/dist/simple-lightbox.min.css";
+let lightbox = new SimpleLightbox('.img-conteiner a',{
+  captions:true,
+  captionDelay:250,});
+
+
 
 const refs = {
     form : document.querySelector('.search-form'),
@@ -39,6 +48,9 @@ async function searchImg(e){
             refs.conteinerImg.insertAdjacentHTML('beforeend', markup(imgArr))
             refs.buttonPage.classList.remove('visually-hidden')
             Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
+            return lightbox;
+            
+            
         }
         
         
@@ -57,7 +69,11 @@ function markup(arrImg){
         return `<div class="card">
         <div class="img-holder">
           <div class="overlay"><i class="fa fa-search"></i></div>
-          <img src="${img.webformatURL}" alt="${img.tags}" width = "25px" />
+          <div class ="img-conteiner">
+          <a href="${img.largeImageURL}">
+          <img src="${img.webformatURL}" alt="${img.tags}" width = "25px" class = 'gallery__image' />
+          </a>
+          </div>
         </div>
         <div class="content-holder">
           <p class="category">Lifestyle</p>
@@ -103,6 +119,16 @@ async function onButtonClick() {
       Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
   }
   refs.conteinerImg.insertAdjacentHTML('beforeend', markup(response.hits));
+  return lightbox.refresh();
 
   
 };
+
+
+
+
+
+
+
+
+ 
