@@ -90,15 +90,7 @@ function markup(arrImg){
 }
 
 
-// function markupBtn(){
-//  return   `<button class="button12 btn-page">
-//         <em> </em>   
-//          <span>
-//            Search Images
-//            </span>
-//           </button>
-//           `
-// }
+
 
 
 

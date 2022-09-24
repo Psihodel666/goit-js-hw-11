@@ -1,20 +1,3 @@
-// export async  function fetchImg(searchName) {
-//   const axios = require('axios');
-//   const BASE_URL = 'https://pixabay.com/api/';
-//   const key = '30110883-082a3209dc2bc0d9dd6730db6';
-  
-//   let page = 1; 
-//   return axios.get(
-//     `${BASE_URL}?key=${key}&q=${searchName}&image_type=photo&orientation=horizontal&safesearch&per_page=40&page=${page}`
-//   ).then(response => {
-//     if(response.status !== 200){
-//       throw new Error('Oops, there is no country with that name')
-//     }
-//     return response;
-//   })
-
-  
-// }
 import axios from "axios";
 const BASE_URL = "https://pixabay.com/api/";
 
@@ -22,7 +5,7 @@ export class searchQuery {
    
    static page = 1;
    static image_type = "photo";
-   static key = '29904861-3a00656c8c471d49ecd8a16bd';
+   static key = '30110883-082a3209dc2bc0d9dd6730db6';
    static query = '';
    static orientation ='horizontal';
    static safesearch = 'true';
@@ -30,10 +13,7 @@ export class searchQuery {
    static maxPage = 13;
 
    static async searchPictures(query = '') {
-    if(query.trim()) searchQuery.query = query;
-
-    
-   const config = {
+    const config = {
         params: {
             key: searchQuery.key,
             q: searchQuery.query,
