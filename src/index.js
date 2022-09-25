@@ -32,6 +32,7 @@ async function searchImg(e){
 
     try {
         if(imgArr.length === 0){
+          refs.buttonPage.classList.add('visually-hidden')
           return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
         }else if(!query){
           refs.buttonPage.classList.add('visually-hidden')
