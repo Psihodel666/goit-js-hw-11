@@ -5,66 +5,53 @@ import { searchQuery} from './fetchImg';
 var debounce = require('debounce');
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+
 let lightbox = new SimpleLightbox('.img-conteiner a',{
   captions:true,
   captionDelay:250,});
 
-
-
-
-
 const refs = {
     form : document.querySelector('.search-form'),
     input : document.querySelector('input'),
-    button : document.querySelector('button'),
     conteinerImg : document.querySelector('.gallery'),
     buttonPage : document.querySelector('.js-load-more')
-    
+
 }
 
-
 refs.form.addEventListener('submit', searchImg)
-// refs.buttonPage.addEventListener('click', onButtonClick)
+refs.buttonPage.classList.add('visually-hidden')
 
 async function searchImg(e){
-    e.preventDefault()
-    const query = e.target.elements.searchQuery.value.trim();
+    e.preventDefault();
+    refs.conteinerImg.innerHTML = "";
+    searchQuery.page = 1;
 
-    const response = await searchQuery.searchPictures(query);
-    
+    const query = e.target.elements.searchQuery.value.trim();
+    const response = await searchQuery.fetchSearch(query);
     const imgArr = response.hits;
 
     try {
-      refs.conteinerImg.innerHTML = '';
-        if(imgArr.length === 0){
-             Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
-            refs.buttonPage.classList.add('visually-hidden')
-            return
-        }else if(!query){
-          Notiflix.Notify.info('Please, enter key word for search!');
-          refs.buttonPage.classList.add('visually-hidden')
-          return
+        if(!query){
+          return Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
+        }else if(imgArr.length === 0){
+          return Notiflix.Notify.info('Please, enter key word for search!');
+          // refs.buttonPage.classList.add('visually-hidden')
         }
         else{
-            refs.conteinerImg.insertAdjacentHTML('beforeend', markup(imgArr))
-            refs.buttonPage.classList.remove('visually-hidden')
             Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
-            let lightbox = new SimpleLightbox('.img-conteiner a',{
-              captions:true,
-              captionDelay:250,});
-              refs.buttonPage.addEventListener('click', onButtonClick)
+            refs.conteinerImg.insertAdjacentHTML('beforeend', markup(imgArr));
+            if(searchQuery.page > response.totalHits / searchQuery.per_page){
+              refs.buttonPage.classList.add('visually-hidden');
+            }else{
+              refs.buttonPage.classList.remove('visually-hidden');
+            }
+            return lightbox.refresh();
         }
-        
-        
     }
-   
     catch(error){
-        Notiflix.Notify.failure('error')
+      Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
 }
-
-
-
 
 function markup(arrImg){
     const markupImg = arrImg.map((img)=>{
@@ -107,24 +94,16 @@ function markup(arrImg){
     return markupImg
 }
 
-
-
-
-
-
+refs.buttonPage.addEventListener('click', onButtonClick)
 async function onButtonClick() {
-  
-  lightbox.destroy();
-  const response = await searchQuery.searchPictures();
   searchQuery.page += 1;
+  const response = await searchQuery.fetchSearch();
   if (searchQuery.page > response.totalHits / searchQuery.per_page) {
       refs.buttonPage.classList.add('visually-hidden');
-      Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+      Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
   }
   refs.conteinerImg.insertAdjacentHTML('beforeend', markup(response.hits));
   return lightbox.refresh();
-
-  
 };
 
 

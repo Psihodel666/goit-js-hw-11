@@ -12,11 +12,13 @@ export class searchQuery {
    static per_page = 40;
    static maxPage = 13;
 
-   static async searchPictures(query) {
+   static async fetchSearch(query = '') {
+    if(query.trim()) searchQuery.query = query;
+
     const config = {
         params: {
             key: searchQuery.key,
-            q: query,
+            q: searchQuery.query,
             image_type: searchQuery.image_type,
             orientation: searchQuery.orientation,
             safesearch: searchQuery.safesearch,
