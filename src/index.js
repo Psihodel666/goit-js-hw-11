@@ -31,11 +31,11 @@ async function searchImg(e){
     const imgArr = response.hits;
 
     try {
-        if(!query){
-          return Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
-        }else if(imgArr.length === 0){
+        if(imgArr.length === 0){
+          return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
+        }else if(!query){
+          refs.buttonPage.classList.add('visually-hidden')
           return Notiflix.Notify.info('Please, enter key word for search!');
-          // refs.buttonPage.classList.add('visually-hidden')
         }
         else{
             Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
